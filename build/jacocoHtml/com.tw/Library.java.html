@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Library.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">student-grade-command-basic-java</a> &gt; <a href="index.source.html" class="el_package">com.tw</a> &gt; <span class="el_source">Library.java</span></div><h1>Library.java</h1><pre class="source lang-java linenums">package com.tw;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+<span class="fc" id="L10">public class Library {</span>
+    public boolean someLibraryMethod() {
+<span class="fc" id="L12">        return true;</span>
+    }
+<span class="fc" id="L14">    static Map&lt;String,String&gt; arr =new HashMap();</span>
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+<span class="nc" id="L17">        Scanner sc =new Scanner(System.in);</span>
+<span class="nc" id="L18">        Integer i= systemoutContext(sc);</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        while(i!=3){</span>
+<span class="nc" id="L20">            DiffCase(i,sc);</span>
+<span class="nc" id="L21">            i=systemoutContext(sc);</span>
+        }
+<span class="nc" id="L23">    }</span>
+
+    /**
+     * 鏄剧ず涓婚〉闈�
+     * @param sc
+     * @return
+     */
+    public static int systemoutContext(Scanner sc){
+<span class="nc" id="L31">        System.out.println(&quot;1. 娣诲姞瀛︾敓&quot;);</span>
+<span class="nc" id="L32">        System.out.println(&quot;2. 鐢熸垚鎴愮哗鍗�&quot;);</span>
+<span class="nc" id="L33">        System.out.println(&quot;3. 閫�鍑�&quot;);</span>
+<span class="nc" id="L34">        System.out.println(&quot;璇疯緭鍏ヤ綘鐨勯�夋嫨锛�1锝�3锛夛細&quot;);</span>
+<span class="nc" id="L35">        return Integer.parseInt(sc.nextLine());</span>
+    }
+
+    /**
+     * 鏍￠獙瀛︾敓淇℃伅鏍煎紡
+     * @param input
+     * @return
+     */
+    public static boolean check_StuInfo_Format(String input){
+<span class="fc" id="L44">        String regExChina = &quot;[\u4e00-\u9fa5]&quot;;</span>
+<span class="fc" id="L45">        String regExFloat=&quot;^[0-9]\\d*$&quot;;</span>
+<span class="fc" id="L46">        Boolean state=false;</span>
+<span class="fc" id="L47">        String[] in=input.split(&quot;,&quot;);</span>
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">        if (in.length== 1||in.length==2) {</span>
+<span class="nc" id="L49">            return false;</span>
+        }
+<span class="fc" id="L51">        state=Pattern.compile(regExChina).matcher(in[0]).find();</span>
+<span class="fc" id="L52">        state=state&amp; Pattern.compile(regExFloat).matcher(in[1]).find();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (int i = 2; i &lt;in.length ; i++) {</span>
+<span class="fc" id="L54">            String[] courses= in[i].split(&quot;:&quot;);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            if (courses.length==1){</span>
+<span class="fc" id="L56">                return false;</span>
+            }
+<span class="fc" id="L58">            state=state&amp;Pattern.compile(regExChina).matcher(courses[0]).find();</span>
+<span class="fc" id="L59">            state=state&amp;Pattern.compile(regExFloat).matcher(courses[1]).find();</span>
+        }
+<span class="fc" id="L61">        return state;</span>
+    }
+
+    /**
+     * 鏍￠獙瀛﹀彿鏍煎紡
+     * @param input
+     * @return
+     */
+    public static boolean check_StuID_Format(String input){
+<span class="fc" id="L70">        String regExFloat=&quot;^[0-9]\\d*$&quot;;</span>
+<span class="fc" id="L71">        Boolean state=false;</span>
+<span class="fc" id="L72">        String[] in=input.split(&quot;,&quot;);</span>
+<span class="fc" id="L73">        state=Pattern.compile(regExFloat).matcher(in[0]).find();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (int i = 1; i &lt;in.length ; i++) {</span>
+<span class="fc" id="L75">            state=state&amp;Pattern.compile(regExFloat).matcher(in[i]).find();</span>
+        }
+<span class="fc" id="L77">        return state;</span>
+    }
+
+    /**
+     * 淇濆瓨瀛︾敓淇℃伅
+     * @param input
+     */
+    public static void saveInfo(String input){
+<span class="nc" id="L85">        String[] in =input.split(&quot;,&quot;);</span>
+<span class="nc" id="L86">        int count=0;</span>
+<span class="nc" id="L87">        float avg=0;</span>
+<span class="nc" id="L88">        String stu=in[0];</span>
+<span class="nc" id="L89">        int i = 2;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        for (; i &lt;in.length ; i++) {</span>
+<span class="nc" id="L91">            String[] courses= in[i].split(&quot;:&quot;);</span>
+<span class="nc" id="L92">            stu=stu+&quot;|&quot;+courses[1];</span>
+<span class="nc" id="L93">            count+=Integer.parseInt(courses[1]);</span>
+        }
+<span class="nc" id="L95">        avg=count/i;</span>
+<span class="nc" id="L96">        stu=stu+&quot;|&quot;+avg+&quot;|&quot;+count+&quot;|&quot;;</span>
+<span class="nc" id="L97">        arr.put(in[1],stu);</span>
+<span class="nc" id="L98">    }</span>
+
+    /**
+     * 鍔熻兘閫夋嫨
+     * @param i
+     * @param sc
+     */
+    public static void DiffCase(int i,Scanner sc) {
+<span class="nc bnc" id="L106" title="All 3 branches missed.">     switch (i) {</span>
+         case 1: {
+<span class="nc" id="L108">             System.out.println(&quot;璇疯緭鍏ュ鐢熶俊鎭紙鏍煎紡锛氬鍚�, 瀛﹀彿, 瀛︾: 鎴愮哗, ...锛夛紝鎸夊洖杞︽彁浜わ細&quot;);</span>
+<span class="nc" id="L109">             String string = sc.nextLine();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">             while (!check_StuInfo_Format(string)) {</span>
+<span class="nc" id="L111">                 System.out.println(&quot;璇疯緭鍏ユ纭殑瀛︾敓淇℃伅锛堟牸寮忥細濮撳悕, 瀛﹀彿, 瀛︾: 鎴愮哗, ...锛夛細&quot;);</span>
+<span class="nc" id="L112">                 string = sc.nextLine();</span>
+             }
+<span class="nc" id="L114">             saveInfo(string);</span>
+<span class="nc" id="L115">             System.out.println(&quot;瀛︾敓&quot; + string.split(&quot;,&quot;)[0] + &quot;鐨勬垚缁╄娣诲姞&quot;);</span>
+<span class="nc" id="L116">             break;</span>
+         }
+         case 2: {
+<span class="nc" id="L119">             System.out.println(&quot;璇疯緭鍏ヨ鎵撳嵃鐨勫鐢熺殑瀛﹀彿锛堟牸寮忥細 瀛﹀彿, 瀛﹀彿,...锛夛紝鎸夊洖杞︽彁浜わ細&quot;);</span>
+<span class="nc" id="L120">             String string = sc.nextLine();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">             while (!check_StuID_Format(string)) {</span>
+<span class="nc" id="L122">                 System.out.println(&quot;璇锋寜姝ｇ‘鐨勬牸寮忚緭鍏ヨ鎵撳嵃鐨勫鐢熺殑瀛﹀彿锛堟牸寮忥細 瀛﹀彿, 瀛﹀彿,...锛夛紝鎸夊洖杞︽彁浜わ細&quot;);</span>
+<span class="nc" id="L123">                 string = sc.nextLine();</span>
+             }
+<span class="nc" id="L125">             System.out.println();</span>
+<span class="nc" id="L126">             System.out.println(&quot;鎴愮哗&quot;);</span>
+<span class="nc" id="L127">             System.out.println(&quot;濮撳悕|鏁板|璇枃|鑻辫|缂栫▼|骞冲潎鍒唡鎬诲垎&quot;);</span>
+<span class="nc" id="L128">             System.out.println(&quot;========================&quot;);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">             for (int j = 0; j &lt; string.split(&quot;,&quot;).length; j++) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                 if(arr.containsKey(string.split(&quot;,&quot;)[j])) {</span>
+<span class="nc" id="L131">                     System.out.println(arr.get(string.split(&quot;,&quot;)[j]));</span>
+                 }
+             }
+<span class="nc" id="L134">             System.out.println(&quot;========================&quot;);</span>
+<span class="nc" id="L135">             System.out.println();</span>
+<span class="nc" id="L136">            break;</span>
+         }
+         case 3:break;
+     }
+<span class="nc" id="L140"> }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
